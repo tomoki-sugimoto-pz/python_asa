@@ -107,7 +107,11 @@ class Basic():
     # @return 文節内の格助詞or係助詞
     def __getPart(self, chunk: Chunk) -> str:
         part = ""
-        ismorph = [morph for morph in chunk.morphs if re.search(r"格助詞|係助詞|連体化|助動詞|副助詞|判定詞", morph.pos)]
+        ismorph = [morph for morph in chunk.morphs if re.search(r"格助詞", morph.pos)]
+        if not ismorph:
+            ismorph = [morph for morph in chunk.morphs if re.search(r"係助詞|連体化", morph.pos)]
+        if not ismorph:
+            ismorph = [morph for morph in chunk.morphs if re.search(r"助動詞|副助詞|判定詞", morph.pos)]
         if ismorph:
             morph = ismorph[-1]
             part = morph.base
